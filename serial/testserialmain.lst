@@ -1,0 +1,60 @@
+   1               		.file	"testserialmain.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  17               	.Ltext0:
+  18               		.data
+  19               	.LC0:
+  20 0000 5265 7365 		.string	"Reset: %x\n"
+  20      743A 2025 
+  20      780A 00
+  21               		.text
+  22               	.global	main
+  24               	main:
+  25               	.LFB7:
+  26               	.LM1:
+  27               	/* prologue: function */
+  28               	/* frame size = 0 */
+  29               	.LM2:
+  30 0000 0E94 0000 		call init_usart1
+  31               	.LM3:
+  32 0004 84B7      		in r24,84-32
+  33 0006 90E0      		ldi r25,lo8(0)
+  34 0008 9F93      		push r25
+  35 000a 8F93      		push r24
+  36 000c 80E0      		ldi r24,lo8(.LC0)
+  37 000e 90E0      		ldi r25,hi8(.LC0)
+  38 0010 9F93      		push r25
+  39 0012 8F93      		push r24
+  40 0014 0E94 0000 		call printf
+  41 0018 0F90      		pop __tmp_reg__
+  42 001a 0F90      		pop __tmp_reg__
+  43 001c 0F90      		pop __tmp_reg__
+  44 001e 0F90      		pop __tmp_reg__
+  45               	.LM4:
+  46 0020 80E0      		ldi r24,lo8(0)
+  47 0022 90E0      		ldi r25,hi8(0)
+  48               	/* epilogue start */
+  49 0024 0895      		ret
+  50               	.LFE7:
+  76               	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 testserialmain.c
+C:\DOCUME~1\robot\LOCALS~1\Temp/ccyZLvya.s:2      *ABS*:0000003f __SREG__
+C:\DOCUME~1\robot\LOCALS~1\Temp/ccyZLvya.s:3      *ABS*:0000003e __SP_H__
+C:\DOCUME~1\robot\LOCALS~1\Temp/ccyZLvya.s:4      *ABS*:0000003d __SP_L__
+C:\DOCUME~1\robot\LOCALS~1\Temp/ccyZLvya.s:5      *ABS*:00000034 __CCP__
+C:\DOCUME~1\robot\LOCALS~1\Temp/ccyZLvya.s:6      *ABS*:00000000 __tmp_reg__
+C:\DOCUME~1\robot\LOCALS~1\Temp/ccyZLvya.s:7      *ABS*:00000001 __zero_reg__
+C:\DOCUME~1\robot\LOCALS~1\Temp/ccyZLvya.s:24     .text:00000000 main
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+init_usart1
+printf

@@ -1,0 +1,1 @@
+<Project name="serial"><File path="serial.h"></File><File path="serial.c"></File><File path="Makefile"></File><File path="testserialmain.c"></File></Project>
