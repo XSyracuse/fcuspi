@@ -1,0 +1,43 @@
+#include"mcp_set.h"
+
+#define UNITS(b) (uint8_t)((b>>16) & 0x0f)
+#define TENS(b)  (uint8_t)((b>>20) & 0x0f)
+#define HUN(b)   (uint8_t)((b>>24) & 0x0f)
+
+//bin is limited to 8 bits  
+uint32_t bin2bcd(uint64_t bin){
+
+  //16 shifts
+  for(int i=0;i<16;i++){
+    bin=bin<<1;
+	if(UNITS(bin)>4) bin = bin + (3UL<<16);
+	if(TENS(bin)>4)  bin = bin + (3UL<<20);
+    if(HUN(bin)>4)   bin = bin + (3UL<<24);
+  }
+  return (bin>>16);
+}
+
+void set_altitude(bool fast,bool cw)
+{
+
+  if(!fast){
+
+    if(cw) target_altitude += 100;
+    else   target_altitude -= 100;
+
+  }
+  else{
+
+    if(cw) target_altitude += 1000;
+    else   target_altitude -= 1000;
+
+  }
+
+}
+
+uint32_t get_altitude()
+{
+
+  return target_altitude;
+
+}
