@@ -408,6 +408,9 @@ int main()
         case PAGE_MCP:
 		  periodic_mcp();
 		  break;
+		case PAGE_PWM:
+		  periodic_pwm();
+          break;	
         default:
 		  break;
 	  }
@@ -431,29 +434,6 @@ void temp_header()
     display_font_start(0,0);
 	display_print_P(PSTR("TEMPERATURE   Celsius"));
 
-    /*
-    display_symbol('T');
-    display_symbol('E');
-    display_symbol('M');
-    display_symbol('P');
-    display_symbol('E');
-    display_symbol('R');
-    display_symbol('A');
-    display_symbol('T');
-    display_symbol('U');
-    display_symbol('R');
-	display_symbol('E');
-    display_symbol(' ');
-    display_symbol(' ');
-    display_symbol(' ');
-    display_symbol('C');
-    display_symbol('e');
-    display_symbol('l');
-	display_symbol('s');
-    display_symbol('i');
-    display_symbol('u');
-	display_symbol('s');
-    */
 }
 void periodic_temp(){
 
@@ -553,10 +533,19 @@ void pwm_display_header()
 }
 void update_pwm()
 {
-    
+	static char str[6];
+    display_font_start(1,0);
+    getDecStr(str,5,accel);
+    display_print(str);
 }
 void periodic_pwm()
 {
+}
+void sw_pwm(bool fast,bool cw)
+{
+    if(cw) pwm2++;
+	else pwm2--;
+	update_pwm();
 }
 void page_sw_handler(bool fast,bool cw)
 {
@@ -569,6 +558,9 @@ void page_sw_handler(bool fast,bool cw)
 	  break;
     case PAGE_MOTOR:
 	  motor_sw(fast,cw);
+	  break;
+	case PAGE_PWM:
+	  sw_pwm(fast,cw);
 	  break;
     default:
 	  break;
@@ -612,11 +604,12 @@ void page_button_handler(uint8_t button)
         break;
 		  
     case PAGE_MCP:
-	page_cycler();
-	break;
+	    page_cycler();
+	    break;
 		  
     case PAGE_PWM:
         page_cycler();
+		break;
 		  
     default:
 	break;
@@ -633,7 +626,7 @@ void page_cycler()
 	  page_current = PAGE_PWM;
 	  break;
     case PAGE_PWM:
-          page_current = PAGE_MOTOR;
+      page_current = PAGE_MOTOR;
 	  break;
     case PAGE_MOTOR:
 	  page_current = PAGE_TEMP;
