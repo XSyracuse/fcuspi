@@ -42,7 +42,8 @@ void speed_cntr_Init(){
   ADIR_PORT &= (1<<ADIR_PIN);
   
   AEN_DDR |= (1<<AEN_PIN);
-  AEN_PORT &= (1<<AEN_PIN);
+  // enable stepper driver - active low	
+  AEN_PORT &= ~(1<<AEN_PIN);
   
 }
 /*! \brief Move the stepper motor a given number of steps.
@@ -89,7 +90,7 @@ void speed_cntr_Move(signed int step, unsigned int accel, unsigned int decel, un
     srd.step_delay = 1000;
     status.running = TRUE;
     
-    AEN_PORT   |=  (1<<AEN_PIN);
+    //AEN_PORT   |=  (1<<AEN_PIN);
     
     OCR1A = 10;
     // Run Timer/Counter 1 with prescaler = 8.
@@ -154,7 +155,7 @@ void speed_cntr_Move(signed int step, unsigned int accel, unsigned int decel, un
     status.running = TRUE;
     
     
-    AEN_PORT   |=  (1<<AEN_PIN);
+    //AEN_PORT   |=  (1<<AEN_PIN);
 
     OCR1A = 10;
     // Set Timer/Counter to divide clock by 8
