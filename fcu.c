@@ -28,6 +28,10 @@ void mcp_display_header();
 void periodic_mcp();
 void update_mcp();
 
+void pwm_display_header();
+void update_pwm();
+void periodic_pwm();
+
 //page coordination
 void page_sw_handler(bool fast,bool cw);
 void page_init();
@@ -75,6 +79,7 @@ char str[5];
 #define PAGE_TEMP   0
 #define PAGE_MOTOR  1
 #define PAGE_MCP    2
+#define PAGE_PWM    3
 
 uint8_t page_current = PAGE_TEMP;
 uint8_t page_refresh_count = 0;
@@ -390,7 +395,7 @@ int main()
 	
     
 
-	if(page_refresh_count>250) {
+    if(page_refresh_count>250) {
       page_refresh_count = 0;
       
 	  switch(page_current) {
@@ -412,7 +417,7 @@ int main()
 
       page_refresh_count++;
 	  _delay_ms(1.9);
-	}
+    }
 
   }//while forever
 
@@ -539,6 +544,20 @@ void update_mcp()
   
 }
 
+void pwm_display_header()
+{
+    display_clear();
+    display_font_start(0,0);
+    display_print_P(PSTR("PWM"));
+    update_pwm();
+}
+void update_pwm()
+{
+    
+}
+void periodic_pwm()
+{
+}
 void page_sw_handler(bool fast,bool cw)
 {
 
@@ -572,6 +591,9 @@ void page_init()
     case PAGE_MCP:
 	  mcp_display_header();
 	  break;
+    case PAGE_PWM:
+	  pwm_display_header();	  
+	  break; 
     default:
 	  break;
   }
@@ -582,18 +604,22 @@ void page_button_handler(uint8_t button)
 {
   switch(page_current) {
     case PAGE_TEMP:
-      page_cycler();
-	  break;
-	case PAGE_MOTOR:
+        page_cycler();
+	break;
+    case PAGE_MOTOR:
 
-      if(motor_button_handler(button)<0) page_cycler(); 
-
-	  break;
+        if(motor_button_handler(button)<0) page_cycler(); 
+        break;
+		  
     case PAGE_MCP:
-	  page_cycler();
-	  break;
+	page_cycler();
+	break;
+		  
+    case PAGE_PWM:
+        page_cycler();
+		  
     default:
-	  break;
+	break;
   }
 }
 
@@ -604,7 +630,10 @@ void page_cycler()
 	  page_current = PAGE_MCP;
 	  break;
     case PAGE_MCP:
-	  page_current = PAGE_MOTOR;
+	  page_current = PAGE_PWM;
+	  break;
+    case PAGE_PWM:
+          page_current = PAGE_MOTOR;
 	  break;
     case PAGE_MOTOR:
 	  page_current = PAGE_TEMP;
