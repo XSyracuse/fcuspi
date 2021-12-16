@@ -267,6 +267,8 @@ ISR(TIMER1_COMPA_vect)
 	  break;
   }
   srd.step_delay = new_step_delay;
+
+  // reset step pin
   ASTEP_PORT &= ~(1<<ASTEP_PIN);
 }
 
