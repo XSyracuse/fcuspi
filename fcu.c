@@ -129,6 +129,7 @@ int main()
 	  page_sw_handler(false,true);
      
 	}
+
 	else if(r0<0) {
 	  if((time-time_r0)<speed_gate)
 	    puts("8-");
@@ -149,6 +150,7 @@ int main()
 
       time_r1 = time;
 	}
+
 	else if(r1<0) {
 	  if((time-time_r1)<speed_gate)
 	    puts("9-");
@@ -166,6 +168,7 @@ int main()
 
 	  time_r2 = time;
 	}
+
 	else if(r2<0) {
 	  if((time-time_r2)<speed_gate)
 	    puts("A-");
@@ -183,6 +186,7 @@ int main()
 
 	  time_r3 = time;
 	}
+
 	else if(r3<0) {
 	  if((time-time_r3)<speed_gate)
 	    puts("B-");
@@ -200,6 +204,7 @@ int main()
 
 	  time_r4 = time;
 	}
+
 	else if(r4<0) {
 	  if((time-time_r4)<speed_gate)
 	    puts("C-");
@@ -217,6 +222,7 @@ int main()
 
 	  time_r5 = time;
 	}
+
 	else if(r5<0) {
 	  if((time-time_r5)<speed_gate)
 	    puts("D-");
@@ -236,18 +242,18 @@ int main()
 	  page_button_handler(1);
     }
 	if(pb & 0x04) puts("2B");
-    //if(pb & 0x08) puts("3B");
+
     if(pb & 0x08) {
-	  puts("RC");// Recall Pressed
+	  puts("3B");
     }
 	if(pb & 0x10) {
-	  puts("CP");// Caution Pressed
+	  puts("4B");
     }
 	if(pb & 0x20) {
-	  puts("WP");// Warning Pressed
+	  puts("5B");
     }
 	if(pb & 0x40) {
-	  puts("EX");// Extra Pressed
+	  puts("6B");
     }
 	char c;
     char ok = __getc(&c);
