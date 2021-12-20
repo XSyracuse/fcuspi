@@ -539,9 +539,8 @@ void pwm_display_header()
 }
 void update_pwm()
 {
-	static char str[6];
     display_font_start(1,0);
-    getDecStr(str,5,accel);
+    getDecStr(str,4,pwm2);
     display_print(str);
 }
 void periodic_pwm()
